@@ -11,5 +11,12 @@ module.exports = (sequelize) => {
     notas: { type: DataTypes.TEXT },
     entregadoPor: { type: DataTypes.STRING },
     estado: { type: DataTypes.STRING },
+    pedidoId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "pedidos",
+        key: "id",
+      },
+    },
   });
 };

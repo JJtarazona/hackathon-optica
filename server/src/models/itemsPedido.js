@@ -9,5 +9,26 @@ module.exports = (sequelize) => {
     },
     cantidad: { type: DataTypes.INTEGER },
     precio: { type: DataTypes.DECIMAL(10, 2) },
+    pedidoId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "pedidos",
+        key: "id",
+      },
+    },
+    inventarioId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "inventarios",
+        key: "id",
+      },
+    },
+    opticaId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "opticas",
+        key: "id",
+      },
+    },
   });
 };

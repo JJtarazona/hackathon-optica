@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
     fechaFactura: { type: DataTypes.DATEONLY },
+    notas: { type: DataTypes.TEXT },
     total: { type: DataTypes.DECIMAL(10, 2) },
     metodoPago: { type: DataTypes.STRING },
     estado: {
@@ -20,6 +21,27 @@ module.exports = (sequelize) => {
         "Cancelada",
       ],
       defaultValue: "Pendiente",
+    },
+    pedidoId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "pedidos",
+        key: "id",
+      },
+    },
+    opticaId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "opticas",
+        key: "id",
+      },
+    },
+    clienteId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "clientes",
+        key: "id",
+      },
     },
   });
 };
