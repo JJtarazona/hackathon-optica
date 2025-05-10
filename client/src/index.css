@@ -1,0 +1,92 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* White */
+    --foreground: 224 71.4% 4.1%; /* Dark Blue/Almost Black */
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+
+    --primary: 262.1 83.3% 57.8%; /* Indigo */
+    --primary-foreground: 210 20% 98%; /* Light Gray/Almost White */
+
+    --secondary: 220 13% 91%; /* Light Gray */
+    --secondary-foreground: 220 14.3% 34.1%; /* Darker Gray */
+
+    --muted: 220 13% 91%;
+    --muted-foreground: 220 8.9% 46.1%; /* Medium Gray */
+
+    --accent: 220 13% 91%;
+    --accent-foreground: 220 14.3% 34.1%;
+
+    --destructive: 0 84.2% 60.2%; /* Red */
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 220 13% 89%; /* Lighter Gray for borders */
+    --input: 220 13% 89%;
+    --ring: 262.1 83.3% 57.8%; /* Indigo for focus rings */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%; /* Dark Blue/Almost Black */
+    --foreground: 210 20% 98%; /* Light Gray/Almost White */
+
+    --card: 224 71.4% 10.2%; /* Slightly Lighter Dark Blue */
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 262.1 83.3% 57.8%; /* Indigo - can remain same or adjust */
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 224 71.4% 10.2%; 
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 224 71.4% 10.2%;
+    --muted-foreground: 210 20% 60.1%; /* Lighter Gray for muted text */
+
+    --accent: 224 71.4% 10.2%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 62.8% 30.6%; /* Darker Red */
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 224 71.4% 15.1%; /* Darker border */
+    --input: 224 71.4% 15.1%;
+    --ring: 262.1 83.3% 57.8%; /* Indigo for focus rings */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply transition-colors duration-300;
+  }
+  /* Responsive typography example */
+  h1 { @apply text-2xl font-bold md:text-3xl lg:text-4xl; }
+  h2 { @apply text-xl font-semibold md:text-2xl lg:text-3xl; }
+  h3 { @apply text-lg font-medium md:text-xl lg:text-2xl; }
+
+  /* Ensure inputs and textareas have appropriate dark mode styling */
+  input, textarea, select {
+    @apply bg-background text-foreground border-input;
+  }
+  input::placeholder, textarea::placeholder {
+    @apply text-muted-foreground;
+  }
+}
+  

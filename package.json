@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.13.23",
+    "express-validator": "^7.2.1"
+  }
+}
