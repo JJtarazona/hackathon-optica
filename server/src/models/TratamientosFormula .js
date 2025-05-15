@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     opticaId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     formulaId: {

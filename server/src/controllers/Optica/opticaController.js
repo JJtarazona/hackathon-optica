@@ -27,6 +27,21 @@ const obtenerOpticaPorId = async (req, res) => {
   }
 };
 
+const validarOptica = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const optica = await Optica.findByPk(id);
+    if (!optica) {
+      return res.status(404).json({ error: "Óptica no encontrada" });
+    }
+
+    res.json(optica);
+  } catch (error) {
+    console.error("Error al validar óptica:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
+
 const actualizarOptica = async (req, res) => {
   try {
     const optica = await Optica.findByPk(req.params.id);
@@ -57,4 +72,5 @@ module.exports = {
   obtenerOpticaPorId,
   actualizarOptica,
   eliminarOptica,
+  validarOptica,
 };

@@ -3,16 +3,16 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define("optica", {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.STRING,
       primaryKey: true,
+      allowNull: false,
     },
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     userId: {
-      type: DataTypes.STRING, // Este será el ID de Clerk
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },

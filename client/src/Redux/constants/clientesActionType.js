@@ -1,0 +1,3 @@
+export const CREATE_CLIENTE = "CREATE_CLIENTE";
+export const GET_CLIENTE = "GET_CLIENTE";
+export const UPDATE_CLIENTE = "UPDATE_CLIENTE";

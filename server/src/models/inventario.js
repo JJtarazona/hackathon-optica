@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
     precioCompra: { type: DataTypes.DECIMAL(10, 2) },
     precioVenta: { type: DataTypes.DECIMAL(10, 2) },
     opticaId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       references: {
         model: "opticas",
         key: "id",

@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
     notasCount: { type: DataTypes.INTEGER, defaultValue: 0 },
     avatarUrl: { type: DataTypes.STRING },
     opticaId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
         model: "opticas",

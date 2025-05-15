@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
     tipo: { type: DataTypes.STRING },
     notas: { type: DataTypes.TEXT },
     opticaId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       references: {
         model: "opticas",
         key: "id",

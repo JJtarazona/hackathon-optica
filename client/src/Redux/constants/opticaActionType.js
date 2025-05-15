@@ -1,0 +1,5 @@
+export const CREATE_OPTICA = "CREATE_OPTICA";
+export const GET_OPTICA = "GET_OPTICA";
+export const UPDATE_OPTICA = "UPDATE_OPTICA";
+export const VALIDAR_OPTICA = "VALIDAR_OPTICA";
+export const GET_OPTICA_ID = "GET_OPTICA_ID";

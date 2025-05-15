@@ -62,6 +62,7 @@ const obtenerFormulas = async (req, res) => {
       include: [{ model: Cliente }, { model: Optica }],
       order: [["fecha", "DESC"]],
     });
+
     res.json(formulas);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -82,7 +83,42 @@ const obtenerFormulaPorId = async (req, res) => {
   }
 };
 
-// Actualizar fórmula
+const obtenerFormulaPorOptica = async (req, res) => {
+  try {
+    const formulas = await Formula.findAll({
+      include: [{ model: Cliente }, { model: Optica }],
+      order: [["fecha", "DESC"]],
+    });
+
+    const formulasConDatos = formulas.map((formula) => {
+      const clienteNombre = formula.cliente
+        ? `${formula.cliente.nombre} ${formula.cliente.apellido}`
+        : "No asignado";
+
+      // Convertir valores a número por si llegan como string
+      const odSph = parseFloat(formula.od_sph) || 0;
+      const odCyl = parseFloat(formula.od_cyl) || 0;
+      const osSph = parseFloat(formula.os_sph) || 0;
+      const osCyl = parseFloat(formula.os_cyl) || 0;
+
+      const odEsf = odSph + odCyl;
+      const osEsf = osSph + osCyl;
+
+      return {
+        ...formula.toJSON(),
+        clienteNombre,
+        odEsf: odEsf.toFixed(2),
+        osEsf: osEsf.toFixed(2),
+      };
+    });
+
+    res.json(formulasConDatos);
+  } catch (error) {
+    console.error("Error al obtener fórmulas:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const actualizarFormula = async (req, res) => {
   try {
     const errores = validateFormulaInput(req.body);
@@ -119,4 +155,5 @@ module.exports = {
   obtenerFormulaPorId,
   actualizarFormula,
   eliminarFormula,
+  obtenerFormulaPorOptica,
 };

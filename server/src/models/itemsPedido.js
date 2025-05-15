@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
       },
     },
     opticaId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       references: {
         model: "opticas",
         key: "id",
