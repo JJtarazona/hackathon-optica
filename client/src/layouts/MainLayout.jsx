@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Toaster } from "@/components/ui/toaster";
 import ThemeToggle from "@/components/ThemeToggle";
 import {
   Home,
@@ -33,15 +32,15 @@ const navOrganizacion = [
 const navItemsFull = [
   { to: "/app/dashboard", label: "Dashboard", icon: Home },
   { to: "/app/clientes", label: "Clientes", icon: Users },
-  { to: "/app/formulas", label: "Fórmulas", icon: FileText },
   { to: "/app/turnos", label: "Turnos", icon: Calendar },
-  { to: "/app/inventario", label: "Inventario", icon: Archive },
-  { to: "/app/pedidos", label: "Pedidos", icon: Package },
-  { to: "/app/entregas", label: "Entregas", icon: Truck },
-  { to: "/app/facturacion", label: "Facturación", icon: ShoppingCart },
-  { to: "/app/proveedores", label: "Proveedores", icon: Users2 },
+  { to: "/app/formulas", label: "Fórmulas", icon: FileText },
+  // { to: "/app/inventario", label: "Inventario", icon: Archive },
+  // { to: "/app/pedidos", label: "Pedidos", icon: Package },
+  // { to: "/app/entregas", label: "Entregas", icon: Truck },
+  // { to: "/app/facturacion", label: "Facturación", icon: ShoppingCart },
+  // { to: "/app/proveedores", label: "Proveedores", icon: Users2 },
   { to: "/app/reportes", label: "Reportes", icon: BarChart3 },
-  { to: "/app/configuracion", label: "Configuración", icon: Settings },
+  // { to: "/app/configuracion", label: "Configuración", icon: Settings },
   { to: "/app/organizacion", label: "Organización", icon: Building2 },
 ];
 
@@ -97,8 +96,6 @@ const MainLayout = () => {
 
   const { organization } = useOrganization();
   const organizacionId = organization?.id;
-
-  console.log("Optica ID:", opticaDatos);
 
   useEffect(() => {
     dispatch(getOpticaId(organizacionId));
@@ -257,7 +254,6 @@ const MainLayout = () => {
           </motion.div>
         </main>
       </div>
-      <Toaster />
     </div>
   );
 };

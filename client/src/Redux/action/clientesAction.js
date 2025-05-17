@@ -3,6 +3,7 @@ import {
   CREATE_CLIENTE,
   GET_CLIENTE,
   UPDATE_CLIENTE,
+  GET_NUMERO_CLIENTE,
 } from "@/Redux/constants/clientesActionType";
 import { ENDPOINTS } from "@/lib/api/endpoint";
 import { toast } from "sonner";
@@ -44,5 +45,18 @@ export const updateCliente = (id, data) => async (dispatch) => {
     toast.success("Cliente actualizado con éxito");
   } catch (error) {
     console.error("Error updating cliente:", error);
+  }
+};
+
+export const numeroClientes = (id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`${ENDPOINTS.CLIENTE}/numero/${id}`);
+    dispatch({
+      type: GET_NUMERO_CLIENTE,
+      payload: response.data,
+    });
+    console.log("Datos del action ", response.data);
+  } catch (error) {
+    console.error("Error fetching cliente by optica:", error);
   }
 };

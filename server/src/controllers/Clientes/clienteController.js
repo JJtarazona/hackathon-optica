@@ -136,85 +136,6 @@ const eliminarCliente = async (req, res) => {
   }
 };
 
-// const obtenerClientesPorOptica = async (req, res) => {
-//   const { opticaId } = req.params;
-
-//   try {
-//     const clientes = await Cliente.findAll({
-//       where: { opticaId },
-//       include: [
-//         {
-//           model: Cita,
-//           where: { estado: "Completada" },
-//           limit: 1,
-//           order: [["fecha", "DESC"]],
-//         },
-//         {
-//           model: Formula,
-//           required: false,
-//           clienteId: { [Op.ne]: null },
-//         },
-//       ],
-//     });
-
-//     if (!clientes.length) {
-//       return res.status(404).json({ error: "No se encontraron clientes" });
-//     }
-
-//     const clientesConDatos = clientes.map((cliente) => {
-//       const ultimaCita = cliente.Cita?.sort(
-//         (a, b) => new Date(b.fecha) - new Date(a.fecha)
-//       )[0];
-
-//       const ultimaFormula =
-//         cliente.formulas?.sort(
-//           (a, b) => new Date(b.fecha) - new Date(a.fecha)
-//         )[0] || null;
-
-//       const sumaOD = ultimaFormula
-//         ? Number(ultimaFormula.od_sph || 0) + Number(ultimaFormula.od_cyl || 0)
-//         : null;
-
-//       const sumaOS = ultimaFormula
-//         ? Number(ultimaFormula.os_sph || 0) + Number(ultimaFormula.os_cyl || 0)
-//         : null;
-
-//       return {
-//         id: cliente.id,
-//         nombre: cliente.nombre,
-//         apellido: cliente.apellido,
-//         telefono: cliente.telefono,
-//         direccion: cliente.direccion,
-//         ultimaCita: ultimaCita
-//           ? {
-//               id: ultimaCita.id,
-//               fecha: ultimaCita.fecha,
-//               motivo: ultimaCita.motivo,
-//               estado: ultimaCita.estado,
-//             }
-//           : null,
-//         formula: ultimaFormula
-//           ? {
-//               id: ultimaFormula.id,
-//               fecha: ultimaFormula.fecha,
-//               od_sph: ultimaFormula.od_sph,
-//               od_cyl: ultimaFormula.od_cyl,
-//               os_sph: ultimaFormula.os_sph,
-//               os_cyl: ultimaFormula.os_cyl,
-//               sumaOD,
-//               sumaOS,
-//             }
-//           : null,
-//       };
-//     });
-
-//     res.json(clientesConDatos);
-//   } catch (error) {
-//     console.error("Error al obtener clientes por óptica:", error);
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
 const obtenerClientesPorOptica = async (req, res) => {
   const { opticaId } = req.params;
 
@@ -299,6 +220,18 @@ const obtenerClientesPorOptica = async (req, res) => {
   }
 };
 
+const numeroCliente = async (req, res) => {
+  const { opticaId } = req.params;
+  try {
+    const clientes = await Cliente.count({
+      where: { opticaId },
+    });
+    res.json(clientes);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   crearCliente,
   obtenerClientes,
@@ -306,4 +239,5 @@ module.exports = {
   actualizarCliente,
   eliminarCliente,
   obtenerClientesPorOptica,
+  numeroCliente,
 };

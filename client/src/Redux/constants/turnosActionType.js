@@ -1,0 +1,5 @@
+export const CREATE_TURNO = "CREATE_TURNO";
+export const GET_TURNO = "GET_TURNO";
+export const UPDATE_TURNO = "UPDATE_TURNO";
+export const DELETE_TURNO = "DELETE_TURNO";
+export const GET_TURNO_BY_OPTICA_ID = "GET_TURNO_BY_OPTICA_ID";

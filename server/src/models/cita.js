@@ -32,5 +32,13 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    optometrista: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    notas: { type: DataTypes.TEXT, allowNull: true },
+    clienteNombre: { type: DataTypes.STRING, allowNull: true },
+    clienteEmail: { type: DataTypes.STRING, allowNull: true },
+    clienteTelefono: { type: DataTypes.STRING, allowNull: true },
   });
 };

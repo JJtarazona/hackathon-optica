@@ -13,8 +13,15 @@ const crearCita = async (req, res) => {
       start,
       end,
       clienteId,
+      optometrista,
       opticaId,
+      notas,
+      clienteNombre,
+      clienteEmail,
+      clienteTelefono,
     } = req.body;
+
+    console.log("Datos de la cita:", req.body);
 
     if (!clienteId || !opticaId) {
       return res
@@ -47,7 +54,12 @@ const crearCita = async (req, res) => {
       start,
       end,
       clienteId,
+      optometrista,
       opticaId,
+      notas,
+      clienteNombre,
+      clienteEmail,
+      clienteTelefono,
     });
 
     return res.status(201).json(nuevaCita);
@@ -60,8 +72,47 @@ const crearCita = async (req, res) => {
 // Obtener todas las citas
 const obtenerCitas = async (req, res) => {
   try {
-    const citas = await Cita.findAll();
-    return res.status(200).json(citas);
+    const citas = await Cita.findAll({
+      include: [
+        {
+          model: Cliente,
+          attributes: ["id", "nombre", "apellido", "email", "telefono"],
+        },
+      ],
+      attributes: [
+        "id",
+        "fecha",
+        "hora",
+        "motivo",
+        "estado",
+        "optometrista",
+        "notas",
+        "createdAt",
+        "updatedAt",
+      ],
+      order: [["fecha", "DESC"]],
+    });
+
+    const citasTransformadas = citas.map((cita) => {
+      const cliente = cita.cliente || {};
+      return {
+        id: cita.id,
+        fecha: cita.fecha,
+        hora: cita.hora,
+        motivo: cita.motivo,
+        notas: cita.notas,
+        estado: cita.estado,
+        optometrista: cita.optometrista,
+        createdAt: cita.createdAt,
+        updatedAt: cita.updatedAt,
+        clienteId: cliente.id,
+        clienteNombre: cliente.nombre + " " + cliente.apellido,
+        clienteEmail: cliente.email,
+        clienteTelefono: cliente.telefono,
+      };
+    });
+
+    return res.status(200).json(citasTransformadas);
   } catch (error) {
     console.error("Error al obtener citas:", error);
     return res.status(500).json({ error: "Error interno del servidor." });
@@ -72,20 +123,56 @@ const obtenerCitas = async (req, res) => {
 const obtenerCitaPorId = async (req, res) => {
   try {
     const { id } = req.params;
+    const citas = await Cita.findAll({
+      where: { id },
+      include: [
+        {
+          model: Cliente,
+          attributes: ["id", "nombre", "apellido", "email", "telefono"],
+        },
+      ],
+      attributes: [
+        "id",
+        "fecha",
+        "hora",
+        "motivo",
+        "estado",
+        "optometrista",
+        "notas",
+        "createdAt",
+        "updatedAt",
+        "clienteNombre",
+        "clienteEmail",
+        "clienteTelefono",
+      ],
+      order: [["fecha", "DESC"]],
+    });
 
-    if (!isUUID(id)) {
-      return res.status(400).json({ error: "ID inválido." });
-    }
+    const citasTransformadas = citas.map((cita) => {
+      const cliente = cita.cliente || {};
+      return {
+        id: cita.id,
+        fecha: cita.fecha,
+        hora: cita.hora,
+        motivo: cita.motivo,
+        notas: cita.notas,
+        estado: cita.estado,
+        optometrista: cita.optometrista,
+        clienteNombre: cita.clienteNombre,
+        clienteEmail: cita.clienteEmail,
+        clienteTelefono: cita.clienteTelefono,
+        createdAt: cita.createdAt,
+        updatedAt: cita.updatedAt,
+        clienteId: cliente.id,
+        // clienteNombre: cliente.nombre + " " + cliente.apellido,
+        // clienteEmail: cliente.email,
+        // clienteTelefono: cliente.telefono,
+      };
+    });
 
-    const citaEncontrada = await Cita.findByPk(id);
-
-    if (!citaEncontrada) {
-      return res.status(404).json({ error: "Cita no encontrada." });
-    }
-
-    return res.status(200).json(citaEncontrada);
+    return res.status(200).json(citasTransformadas);
   } catch (error) {
-    console.error("Error al buscar cita:", error);
+    console.error("Error al obtener citas:", error);
     return res.status(500).json({ error: "Error interno del servidor." });
   }
 };
@@ -104,7 +191,14 @@ const actualizarCita = async (req, res) => {
       end,
       clienteId,
       opticaId,
+      notas,
+      optometrista,
+      clienteNombre,
+      clienteEmail,
+      clienteTelefono,
     } = req.body;
+
+    console.log("Datos de la cita:", req.body);
 
     if (!isUUID(id)) {
       return res.status(400).json({ error: "ID inválido." });
@@ -126,6 +220,11 @@ const actualizarCita = async (req, res) => {
       end,
       clienteId,
       opticaId,
+      notas,
+      clienteNombre,
+      optometrista,
+      clienteEmail,
+      clienteTelefono,
     });
 
     return res.status(200).json(citaExistente);
@@ -159,7 +258,19 @@ const eliminarCita = async (req, res) => {
   }
 };
 
+const getCitasByOpticaId = async (req, res) => {
+  try {
+    const { opticaId } = req.params;
+    const citas = await Cita.findAll({ where: { opticaId } });
+    res.status(200).json(citas);
+  } catch (error) {
+    console.error("Error al obtener citas por opticaId:", error);
+    res.status(500).json({ error: "Error interno del servidor." });
+  }
+};
+
 module.exports = {
+  getCitasByOpticaId,
   crearCita,
   obtenerCitas,
   obtenerCitaPorId,

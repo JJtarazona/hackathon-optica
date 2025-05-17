@@ -6,6 +6,7 @@ const {
   actualizarCliente,
   eliminarCliente,
   obtenerClientesPorOptica,
+  numeroCliente,
 } = require("../../controllers/Clientes/clienteController");
 // TODO implementar para la autenticación
 // const checkAuth = require("../../middlewares/checkAuth");
@@ -19,5 +20,8 @@ clienteRouter.put("/:id", actualizarCliente);
 clienteRouter.delete("/:id", eliminarCliente);
 clienteRouter.get("/:id", obtenerClientePorId);
 clienteRouter.get("/por-optica/:opticaId", obtenerClientesPorOptica);
+
+//Para la grafica
+clienteRouter.get("/numero/:opticaId", numeroCliente);
 
 module.exports = clienteRouter;
